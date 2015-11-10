@@ -163,6 +163,56 @@ class Baidu(object):
             tbs = temp[1:-1]
             return tbs
 
-    def shua_wenku(self):
-        pass
 
+    def wenku_get_docid(self):
+        url = 'http://wenku.baidu.com/task/browse/daily'
+        content = urllib2.urlopen(url).read()
+        docid = re.findall('data-docid=\\\'.+\\\' data-surl',content)
+        if len(docid) == 5:
+            for temp in docid:
+                i = re.search('\'.+\'',temp).group()
+                i = i[1:-1]
+                print i
+                self.wenku_share(i)
+            self.wenku_getreward()
+        else:
+            pass
+
+    def wenku_share(self,docid):
+        url = 'http://wenku.baidu.com/task/interface/sharedoc?docid=' + docid + '&type=2'
+        head = {
+            "DNT":"1",
+            "Host": "wenku.baidu.com",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Referer": "http://wenku.baidu.com/task/browse/daily",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.132 Safari/537.36"
+        }
+        req = urllib2.Request(url,headers=head)
+        res = urllib2.urlopen(req).read()
+        #print res
+
+    def wenku_getreward(self):
+        url = 'http://wenku.baidu.com/task/submit/getshareaward'
+        head = {
+            "DNT":"1",
+            "Host": "wenku.baidu.com",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Referer": "http://wenku.baidu.com/task/browse/daily",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.132 Safari/537.36"
+        }
+        req = urllib2.Request(url,headers=head)
+        res = urllib2.urlopen(req).read()
+        print res
+
+    def wenku_signin(self):
+        url = 'http://wenku.baidu.com/task/submit/signin'
+        head = {
+            "DNT":"1",
+            "Host": "wenku.baidu.com",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Referer": "http://wenku.baidu.com/task/browse/daily",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.132 Safari/537.36"
+        }
+        req = urllib2.Request(url,headers=head)
+        res = urllib2.urlopen(req).read()
+        print res

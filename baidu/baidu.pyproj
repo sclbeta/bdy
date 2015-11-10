@@ -27,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="baidujiami.js" />
+    <Content Include="config.ini" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
